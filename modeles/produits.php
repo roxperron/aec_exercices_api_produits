@@ -100,12 +100,12 @@ class modele_produit {
         return $message;
       }
 
-      public static function modifier($id, $nom, $description, $prix, $qtestock) {
+      public static function modifier( $id,$nom, $description, $prix, $qtestock ) {
         $message = '';
 
         $mysqli = self::connecter();
         
-        if ($requete = $mysqli->prepare("UPDATE produits SET nom=?, description=?, prix=?, qtestock=? WHERE id=?")) {      
+        if ($requete = $mysqli->prepare("UPDATE produits SET  nom=?, description=?, prix=?, qtestock=? WHERE id=?")) {      
 
 
         $requete->bind_param("ssdii", $nom, $description, $prix, $qtestock, $id);
