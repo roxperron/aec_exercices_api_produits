@@ -33,10 +33,42 @@ class ControleurProduit {
         }
     }
 
+
+
     function afficherFicheJSON($id) {
         $produit = modele_produit::ObtenirUn($id);
         echo json_encode($produit);
+    }
+
+
+
+    function ajouterJSON($data) {
+        $resultat = new stdClass();
+            if(isset($data['id']) && isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
+        $resultat->message = modele_produit::ajouter($data['id'], $data['nom'], $data['description'], $data['prix'], $data['qtestock']);
+        } else {
+            $resultat->message = "Impossible d'ajouter un produit. Des informations sont manquantes";
         }
+        echo json_encode($resultat);
+    }   
+    
+    function modifierJSON($data) {
+        $resultat = new stdClass();
+           if(isset($_GET['id']) && isset($data['id']) && isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
+        $resultat->message = modele_produit::modifier($_GET['id'], $data['nom'], $data['description'], $data['prix'], $data['qtestock']);
+        } else {
+            $resultat->message = "Impossible de modifier le produit. Des informations sont manquantes";
+        require './vues/erreur.php';
+        }
+        echo json_encode($resultat);
+        }
+
+
+        function supprimerJSON($id) {
+            $resultat = new stdClass();
+            $resultat->message = modele_produit::supprimer($_GET['id']);
+            echo json_encode($resultat);
+            }    
 
 
 

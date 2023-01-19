@@ -70,8 +70,97 @@ class modele_produit {
     
         return $produits;
     }
+
+
+    
+    public static function ajouter($id, $nom, $description, $prix, $qtestock) {
+        $message = '';
+
+        $mysqli = self::connecter();
+        
+        if ($requete = $mysqli->prepare("INSERT INTO produits (nom, description, prix, qtestock) VALUES(?, ?, ?, ?)")) {      
+
+
+        $requete->bind_param("ssdi", $nom, $description, $prix, $qtestock);
+
+        if($requete->execute()) { 
+            $message = "Produit ajouté!";  
+        } else {
+            $message =  "Une erreur est survenue lors de l'ajout: " . $requete->error;  
+        }
+
+        $requete->close(); 
+        } else  {
+            echo "Une erreur a été détectée dans la requête utilisée : ";   
+            echo $mysqli->error;
+            echo "<br>";
+            exit();
+        }
+
+        return $message;
+      }
+
+      public static function modifier($id, $nom, $description, $prix, $qtestock) {
+        $message = '';
+
+        $mysqli = self::connecter();
+        
+        if ($requete = $mysqli->prepare("UPDATE produits SET nom=?, description=?, prix=?, qtestock=? WHERE id=?")) {      
+
+
+        $requete->bind_param("ssdii", $nom, $description, $prix, $qtestock, $id);
+
+        if($requete->execute()) { 
+            $message = "Produit modifié!";  
+        } else {
+            $message =  "Une erreur est survenue lors de l'ajout: " . $requete->error;  
+        }
+
+        $requete->close(); 
+        } else  {
+            echo "Une erreur a été détectée dans la requête utilisée : ";   
+            echo $mysqli->error;
+            echo "<br>";
+            exit();
+        }
+
+        return $message;
+      }
+
+      public static function supprimer($id) {
+        $message = '';
+
+        $mysqli = self::connecter();
+        
+       
+        if ($requete = $mysqli->prepare("DELETE FROM produits WHERE id=?")) {      
+
+       
+
+        $requete->bind_param("i", $id);
+
+        if($requete->execute()) { 
+            $message = "Produit supprimé!";  
+        } else {
+            $message =  "Une erreur est survenue lors de la suppression: " . $requete->error;  
+        }
+
+        $requete->close(); 
+
+        } else  {
+            echo "Une erreur a été détectée dans la requête utilisée : ";
+            echo $mysqli->error;
+            echo "<br>";
+            exit();
+        }
+
+        return $message;
+    }
+}
+
+ 
     
 
-}
+
 
 ?>
