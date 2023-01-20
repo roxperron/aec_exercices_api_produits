@@ -25,11 +25,11 @@ class ControleurProduit {
                 require './vues/fiche.php';
             } else {
                 $erreur = "Aucun produits trouvés.";
-                require './vues/erreur.php';
+               
             }
         } else {
             $erreur = "L'identifiant (id) du produit à afficher est manquant dans l'url";
-            require './vues/erreur.php';
+            
         }
     }
 
@@ -44,8 +44,8 @@ class ControleurProduit {
 
     function ajouterJSON($data) {
         $resultat = new stdClass();
-            if(isset($data['id']) && isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
-        $resultat->message = modele_produit::ajouter($data['id'], $data['nom'], $data['description'], $data['prix'], $data['qtestock']);
+            if(isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
+        $resultat->message = modele_produit::ajouter($data['nom'], $data['description'], $data['prix'], $data['qtestock']);
         } else {
             $resultat->message = "Impossible d'ajouter un produit. Des informations sont manquantes";
         }
@@ -54,11 +54,10 @@ class ControleurProduit {
     
     function modifierJSON($data) {
         $resultat = new stdClass();
-           if(isset($_GET['id']) && isset($data['id']) && isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
+           if(isset($_GET['id'])  && isset($data['nom']) && isset($data['description']) && isset($data['prix']) && isset($data['qtestock'])) {
         $resultat->message = modele_produit::modifier($_GET['id'], $data['nom'], $data['description'], $data['prix'], $data['qtestock']);
         } else {
             $resultat->message = "Impossible de modifier le produit. Des informations sont manquantes";
-        require './vues/erreur.php';
         }
         echo json_encode($resultat);
         }

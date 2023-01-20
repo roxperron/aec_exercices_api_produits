@@ -73,7 +73,7 @@ class modele_produit {
 
 
     
-    public static function ajouter($id, $nom, $description, $prix, $qtestock) {
+    public static function ajouter( $nom, $description, $prix, $qtestock) {
         $message = '';
 
         $mysqli = self::connecter();
