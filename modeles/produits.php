@@ -23,7 +23,6 @@ class modele_produit {
         
         $mysqli = new mysqli(Db::$host, Db::$username, Db::$password, Db::$database);
 
-        // Vérifier la connexion
         if ($mysqli -> connect_errno) {
             echo "Échec de connexion à la base de données MySQL: " . $mysqli -> connect_error;   
             exit();
@@ -34,7 +33,7 @@ class modele_produit {
 
  
     public static function ObtenirTous() {
-        $liste = [];
+        $tableau = [];
         $mysqli = self::connecter();
 
         $resultatRequete = $mysqli->query("SELECT id, nom, description, prix, qtestock FROM produits ORDER BY id");
